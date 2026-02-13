@@ -3,13 +3,13 @@ package org.example;
 public class Client {
     private String id;
     private String nom;
-    private double soldInit;
+    private double solde_init;
     
 
     public Client(String id, String nom, double soldInit) {
         this.id = id;
         this.nom = nom;
-        this.soldInit = soldInit;
+        this.solde_init = soldInit;
     }
 
     public String getId() {
@@ -29,10 +29,10 @@ public class Client {
     }
 
     public double getSoldInit() {
-        return soldInit;
+        return solde_init;
     }
 
-    public void setSoldInit(double soldInit) {
-        this.soldInit = soldInit;
+    public void setSoldInit(double solde_init) {
+        this.solde_init = solde_init;
     }
 }
