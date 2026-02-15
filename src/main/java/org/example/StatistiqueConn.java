@@ -8,8 +8,8 @@ public class StatistiqueConn {
 
     private Connection connection;
     private Statistique statistique;
-    public StatistiqueConn(Connection connection) {
-        this.connection = connection;
+    public StatistiqueConn(Connection conn) {
+        this.connection = conn;
     }
 
     public Statistique getStatistiquesGlobales() {
