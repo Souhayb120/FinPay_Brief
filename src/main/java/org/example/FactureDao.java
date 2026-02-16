@@ -25,11 +25,11 @@ public class FactureDao {
         }else {
             status="Payée";
         }
-      try(PreparedStatement ps = conn.prepareStatement("INSERT INTO facture(date_facture,montant_total,montant,status,id_client,id_prestataire) VALUES(?,?,?,?,?,?)")) {
-          ps.setDate(1, Date.valueOf(LocalDate.now()));
-          ps.setDouble(2, totalMontant);
+      try(PreparedStatement ps = conn.prepareStatement("INSERT INTO facture(status,date_facture,montant,montant_total,id_client,id_prestataire) VALUES(?,?,?,?,?,?)")) {
+          ps.setString(1, status);
+          ps.setDate(2, Date.valueOf(LocalDate.now()));
           ps.setDouble(3, montant);
-          ps.setString(4, status);
+          ps.setDouble(4, totalMontant);
           ps.setInt(5, idClient);
           ps.setInt(6, idPrestataire);
           ps.executeUpdate();
@@ -93,11 +93,11 @@ public class FactureDao {
 
           ResultSet rs = ps.executeQuery();
           while (rs.next()) {
-              System.out.println("id" + rs.getInt("id"));
-              System.out.println("status" + rs.getString("status"));
-              System.out.println("Date" + rs.getDate("date_facture"));
-              System.out.println("id client" + rs.getInt("id_client"));
-              System.out.println("id prestataire" + rs.getInt("id_prestataire"));
+              System.out.println("id " + rs.getInt("id"));
+              System.out.println("status " + rs.getString("status"));
+              System.out.println("Date " + rs.getDate("date_facture"));
+              System.out.println("id client " + rs.getInt("id_client"));
+              System.out.println("id prestataire " + rs.getInt("id_prestataire"));
           }
       }
     }

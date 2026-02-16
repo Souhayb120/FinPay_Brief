@@ -58,8 +58,7 @@ public void ajouterClient(Connection conn) throws SQLException {
             PreparedStatement ps = conn.prepareStatement("UPDATE client SET nom=? WHERE id=?");
             ps.setString(1, nom);
             ps.setInt(2, id);
-
-
+            ps.executeUpdate();
         }
 
 
