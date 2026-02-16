@@ -53,7 +53,7 @@ public class FactureDao {
        }
     }
 
-    public void findById(Connection con ,int id)throws SQLException {
+    public static Facture findById(Connection con, int id)throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM facture WHERE id = ?  ");
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -72,6 +72,7 @@ public class FactureDao {
             System.out.println("Id Prestataire : " + idPrestataire);
 
         }
+        return null;
     }
 
     public void modifierFactureAuto(Connection con, int id, double total, double montant, String status, int idClient, int idPrestataire) throws SQLException {
