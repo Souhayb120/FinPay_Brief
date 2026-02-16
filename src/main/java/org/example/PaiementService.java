@@ -2,6 +2,7 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class PaiementService {
@@ -17,8 +18,9 @@ public class PaiementService {
                                          int idFacture,
                                          double montant) throws SQLException {
 
-
-        Facture facture = factureDAO.findById(con, idFacture);
+PaiementDAO paiementDAO = new PaiementDAO();
+FactureDao factureDao = new FactureDao();
+        Facture facture = FactureDao.findById(con, idFacture);
         if (facture == null) {
             System.out.println("Facture introuvable");
             return;
@@ -50,7 +52,7 @@ public class PaiementService {
         double nouveauMontant = dejaPaye + montant;
         String status = (nouveauMontant == total) ? "Payée" : "Partiel";
 
-        factureDAO.modifierFactureAuto(
+        factureDao.modifierFactureAuto(
                 con,
                 idFacture,
                 total,
