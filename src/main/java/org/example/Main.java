@@ -15,9 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-
             mainMenu(conn);
-
         } catch (Exception e) {
             System.out.println("Erreur connexion DB: " + e.getMessage());
         }
@@ -34,6 +32,7 @@ public class Main {
             System.out.println("2. Gestion Factures");
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
+            System.out.println("5. Gestion Clients");   // NEW
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -45,6 +44,7 @@ public class Main {
                 case 2 -> factureMenu(conn);
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
+                case 5 -> clientMenu(conn);   // NEW
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
@@ -190,6 +190,51 @@ public class Main {
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
+                }
+            }
+
+        } while (choice != 0);
+    }
+
+    // ================= CLIENT =================
+    public static void clientMenu(Connection conn) {
+
+        Daoclient dao = new Daoclient();
+        int choice;
+
+        do {
+            System.out.println("\n--- MENU CLIENT ---");
+            System.out.println("1. Ajouter");
+            System.out.println("2. Supprimer");
+            System.out.println("3. Modifier");
+            System.out.println("4. Chercher");
+            System.out.println("5. Lister");
+            System.out.println("0. Retour");
+            System.out.print("Choix: ");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> {
+                    try { dao.ajouterClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 2 -> {
+                    try { dao.supprimerClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 3 -> {
+                    try { dao.modifierClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 4 -> {
+                    try { dao.chercherClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 5 -> {
+                    try { dao.listerClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
                 }
             }
 
