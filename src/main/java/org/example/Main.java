@@ -247,6 +247,7 @@ public class Main {
         System.out.println("Total commissions: " + stats.getTotalCommissions());
         System.out.println("Factures payées: " + stats.getFacturesPayees());
         System.out.println("Factures non payées: " + stats.getFacturesNonPayees());
+        System.out.println("Factures Partiel: " + stats.getFacturesPartiel());
         System.out.println("Total transactions: " + stats.getTotalTransactions());
     }
 }
