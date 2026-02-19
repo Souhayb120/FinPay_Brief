@@ -31,7 +31,7 @@ public class RapportGlobalExcel {
 
         // HEADER
         Row headerRow = sheet.createRow(0); // 0 is the index of the first row
-        String[] headers = {"Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
+        String[] headers = {"mois","Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
         //style
         CellStyle headerStyle = workbook.createCellStyle();
         Font boldFont = workbook.createFont();
@@ -47,10 +47,11 @@ public class RapportGlobalExcel {
         int rowsIndex = 1;
         while (rs.next()) {
             Row row = sheet.createRow(rowsIndex++);
-            row.createCell(0).setCellValue(rs.getString("prestataire"));
-            row.createCell(1).setCellValue(rs.getInt("nombre_factures"));
-            row.createCell(2).setCellValue(rs.getDouble("total_genere"));
-            row.createCell(3).setCellValue(rs.getDouble("total_commission"));
+            row.createCell(0).setCellValue(rs.getString("mois"));
+            row.createCell(1).setCellValue(rs.getString("prestataire"));
+            row.createCell(2).setCellValue(rs.getInt("nombre_factures"));
+            row.createCell(3).setCellValue(rs.getDouble("total_genere"));
+            row.createCell(4).setCellValue(rs.getDouble("total_commission"));
         }
 try {
     FileOutputStream fileOutputStream = new FileOutputStream("rapportglobalmois.xlsx");
