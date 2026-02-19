@@ -2,6 +2,7 @@ package org.example;
 import java.sql.*;
 import java.sql.SQLException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 public class PaiementDAO {
@@ -19,6 +20,7 @@ public class PaiementDAO {
             ps.executeUpdate();
         }
     }
+
     public void update(Connection con,Paiement p) throws SQLException {
 
         String sql = "UPDATE paiement SET montant = ?, date_paiement = ?, " +

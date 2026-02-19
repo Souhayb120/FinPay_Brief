@@ -44,9 +44,6 @@ public void ajouterClient(Connection con) throws SQLException {
 
 
         }
-
-
-
         public void modifierClient(Connection con) throws SQLException {
             System.out.print("Entrer l'ID du client à modifier : ");
             int id = sc.nextInt();
@@ -61,8 +58,6 @@ public void ajouterClient(Connection con) throws SQLException {
 
 
         }
-
-
         public void listerClient(Connection con) throws SQLException {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM client");
