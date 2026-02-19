@@ -101,7 +101,6 @@ public class FactureDao {
           }
       }
     }
-
     public void filtrerParstatus(Connection conn ,String status)throws SQLException{
      try(PreparedStatement ps =conn.prepareStatement("SELECT * FROM facture WHERE status=?")) {
         ps.setString(1,status);

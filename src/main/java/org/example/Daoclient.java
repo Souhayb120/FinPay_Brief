@@ -61,7 +61,6 @@ public void ajouterClient(Connection conn) throws SQLException {
             ps.executeUpdate();
         }
 
-
         public void listerClient(Connection conn) throws SQLException {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM client");
