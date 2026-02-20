@@ -25,13 +25,13 @@ public class FactureDao {
         }else {
             status="Payée";
         }
-      try(PreparedStatement ps = con.prepareStatement("INSERT INTO facture(date_facture,montant_total,montant,status,id_client,id_prestataire) VALUES(?,?,?,?,?,?)")) {
+      try(PreparedStatement ps = con.prepareStatement("INSERT INTO facture(date_facture,status,id_client,id_prestataire,montant_total,montant) VALUES(?,?,?,?,?,?)")) {
           ps.setDate(1, Date.valueOf(LocalDate.now()));
-          ps.setDouble(2, totalMontant);
-          ps.setDouble(3, montant);
-          ps.setString(4, status);
-          ps.setInt(5, idClient);
-          ps.setInt(6, idPrestataire);
+          ps.setString(2, status);
+          ps.setInt(3, idClient);
+          ps.setInt(4, idPrestataire);
+          ps.setDouble(5, totalMontant);
+          ps.setDouble(6, montant);
           ps.executeUpdate();
           System.out.println("Ajouter facture success");
       }
@@ -130,4 +130,17 @@ public class FactureDao {
         }
 
     }
+
+    public static double getMontantTotal(Connection con, int idFacture) throws SQLException {
+        String sql = "SELECT montant_total FROM facture WHERE id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idFacture);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("montant_total");
+            }
+        }
+        return 0;
+    }
+
 }

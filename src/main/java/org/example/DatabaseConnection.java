@@ -1,7 +1,11 @@
+
+
 package org.example;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/finpay";
     private static final String USER = "root";

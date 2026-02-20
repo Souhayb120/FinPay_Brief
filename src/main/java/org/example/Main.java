@@ -1,6 +1,8 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +19,7 @@ public class Main {
     }
 
     // ================= MAIN MENU =================
-    public static void mainMenu(Connection conn) {
+    public static void mainMenu(Connection conn) throws SQLException {
 
         int choice;
 
@@ -27,7 +29,7 @@ public class Main {
             System.out.println("2. Gestion Factures");
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
-            System.out.println("5. Gestion Clients");   // NEW
+            System.out.println("5. Gestion Clients");
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -134,7 +136,7 @@ public class Main {
     }
 
     // ================= PAIEMENT =================
-    public static void paiementMenu(Connection conn) {
+    public static void paiementMenu(Connection conn) throws SQLException {
 
         PaiementDAO dao = new PaiementDAO();
         int choice;
@@ -143,6 +145,10 @@ public class Main {
             System.out.println("\n--- MENU PAIEMENT ---");
             System.out.println("1. Ajouter paiement");
             System.out.println("2. Lister paiements");
+            System.out.println("3. gérer un paiement partiel");
+            System.out.println("4. Update un paiement ");
+            System.out.println("5. Générer PDF d'un paiement");
+
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -168,7 +174,7 @@ public class Main {
                         p.setCommission(sc.nextDouble());
                         sc.nextLine();
 
-                        dao.save(conn,p);
+                        dao.save(conn, p);
 
                         System.out.println("Paiement ajouté ✔");
 
@@ -186,10 +192,43 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                 }
-            }
 
-        } while (choice != 0);
-    }
+                case 3 -> {
+                    try {
+                        PaiementService paiementService = new PaiementService();
+                        paiementService.effectuerPaiementPartiel(conn);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        PaiementDAO p = new PaiementDAO();
+                        p.update(conn,sc);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 5 ->{
+                    try {
+                        System.out.print("Entrez l'ID du paiement pour générer PDF : ");
+                        int idPaiement = sc.nextInt();
+                        sc.nextLine();
+
+                        PaiementService.genererPDF(conn, idPaiement);
+
+                    } catch (Exception e) {
+                        System.out.println(" Erreur lors de la génération du PDF");
+                        e.printStackTrace();
+                    }
+                    break;
+
+            }
+        }
+        }
+            while (choice != 0) ;
+        }
+
 
     // ================= CLIENT =================
     public static void clientMenu(Connection conn) {

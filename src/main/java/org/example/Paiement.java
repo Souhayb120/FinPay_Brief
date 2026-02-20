@@ -8,15 +8,16 @@ public class Paiement {
     private LocalDate date;
     private int idFacture;
     private double commission;
-
+    private String modePaiement;
     public Paiement(){};
 
-    public Paiement(int id, double montant, LocalDate date, int idFacture, double commission) {
+    public Paiement(int id, double montant, LocalDate date, int idFacture, double commission,String modePaiement) {
         this.id = id;
         this.montant = montant;
         this.date = date;
         this.idFacture = idFacture;
         this.commission = commission;
+        this.modePaiement = modePaiement;
     }
 
     public int getId() {
@@ -57,6 +58,14 @@ public class Paiement {
 
     public void setCommission(double commission) {
         this.commission = commission;
+    }
+
+    public String getModePaiement() {
+        return modePaiement;
+    }
+
+    public void setModePaiement(String modePaiement) {
+        this.modePaiement = modePaiement;
     }
 
     @Override
