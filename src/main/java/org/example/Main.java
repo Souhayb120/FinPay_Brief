@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class Main {
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
             System.out.println("5. Gestion Clients");
+            System.out.println("6. Rapport Global Mensuel (Admin) – Excel");// NEW
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -41,6 +43,7 @@ public class Main {
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
                 case 5 -> clientMenu(conn);
+                case 6 -> RapportGlobalExcel.excecute();
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
@@ -135,7 +138,7 @@ public class Main {
     }
 
     // ================= PAIEMENT =================
-    public static void paiementMenu(Connection conn) throws SQLException {
+    public static void paiementMenu(Connection conn) {
 
         PaiementDAO dao = new PaiementDAO();
         int choice;
@@ -144,9 +147,6 @@ public class Main {
             System.out.println("\n--- MENU PAIEMENT ---");
             System.out.println("1. Ajouter paiement");
             System.out.println("2. Lister paiements");
-            System.out.println("3. gérer un paiement partiel");
-            System.out.println("4. Update un paiement ");
-            System.out.println("5. Générer PDF d'un paiement");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -154,7 +154,6 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
-
                 case 1 -> {
                     try {
                         Paiement p = new Paiement();
@@ -168,12 +167,12 @@ public class Main {
 
                         System.out.print("ID facture: ");
                         p.setIdFacture(sc.nextInt());
+
+                        System.out.print("Commission: ");
+                        p.setCommission(sc.nextDouble());
                         sc.nextLine();
 
-                        System.out.print("Mode de paiement: ");
-                        p.setModePaiement(sc.nextLine());
-
-                        dao.save(conn, p);
+                        dao.save(conn,p);
 
                         System.out.println("Paiement ajouté ✔");
 
@@ -189,38 +188,6 @@ public class Main {
                         }
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                    }
-                }
-
-                case 3 -> {
-                    try {
-                        PaiementService paiementService = new PaiementService();
-                        paiementService.effectuerPaiementPartiel(conn);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-
-                case 4 -> {
-                    try {
-                        PaiementDAO p = new PaiementDAO();
-                        p.update(conn, sc);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-
-                case 5 -> {
-                    try {
-                        System.out.print("Entrez l'ID du paiement pour générer PDF : ");
-                        int idPaiement = sc.nextInt();
-                        sc.nextLine();
-
-                        PaiementService.genererPDF(conn, idPaiement);
-
-                    } catch (Exception e) {
-                        System.out.println("Erreur lors de la génération du PDF");
-                        e.printStackTrace();
                     }
                 }
             }
@@ -284,6 +251,7 @@ public class Main {
         System.out.println("Total commissions: " + stats.getTotalCommissions());
         System.out.println("Factures payées: " + stats.getFacturesPayees());
         System.out.println("Factures non payées: " + stats.getFacturesNonPayees());
+        System.out.println("Factures Partiel: " + stats.getFacturesPartiel());
         System.out.println("Total transactions: " + stats.getTotalTransactions());
     }
 }
