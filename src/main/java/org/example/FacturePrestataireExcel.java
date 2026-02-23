@@ -16,11 +16,18 @@ import java.sql.SQLException;
 public class FacturePrestataireExcel{
     private FacturePrestataireExcel(){}
     public static void execute() throws IOException, SQLException {
-        String sql = "select facture.date_facture as Date ,facture.id as ID ,client.nom as Client,facture.montant as Montant,DATEDIFF(CURRENT_DATE,facture.date_facture) as Jours_de_retards\n" +
-                "from facture \n" +
-                "join client on facture.id_client=client.id;";
+        String sql = "SELECT \n" +
+                "    f.id as ID,\n" +
+                "    f.date_facture as Date,\n" +
+                "    c.nom as client,\n" +
+                "    f.montant_total as montant,\n" +
+                "    f.status as status\n" +
+                "FROM facture f\n" +
+                "JOIN client c ON f.id_client = c.id\n" +
+                "AND f.id_prestataire = ?;";
         Connection conn =DatabaseConnection.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, 1);
         ResultSet rs = ps.executeQuery();
 
         // xlsxfile
@@ -30,22 +37,43 @@ public class FacturePrestataireExcel{
 
         // header
         Row headerRow = sheet.createRow(0);
-        String[] header={"Date ","ID" , "Client", " Montant "," Status "};
+        String[] header={"Date ","ID" , "Client", " Montant "," status "};
         for(int i =0;i<header.length;i++){
             Cell cell = headerRow.createCell(i);
             cell.setCellValue(header[i]);
 
         }
+        double totalFacture = 0;
+        double totalPaye = 0;
+        double totalEnAttente = 0;
+
         int rindex = 1;
-        while(rs.next()){
-            Row row = sheet.createRow(rindex ++);
+
+        while (rs.next()) {
+
+            Row row = sheet.createRow(rindex++);
+
             java.sql.Date date = rs.getDate("Date");
             row.createCell(0).setCellValue(date.toString());
 
             row.createCell(1).setCellValue(rs.getInt("ID"));
-            row.createCell(2).setCellValue(rs.getString("Client"));
-            row.createCell(3).setCellValue(rs. getDouble("Montant"));
-            row.createCell(4).setCellValue(rs.getString("status"));
+            row.createCell(2).setCellValue(rs.getString("client"));
+
+            double montant = rs.getDouble("montant");
+            row.createCell(3).setCellValue(montant);
+
+            String statut = rs.getString("status");
+            row.createCell(4).setCellValue(statut);
+
+            totalFacture += montant;
+
+            if ("PAYEE".equalsIgnoreCase(statut)) {
+                totalPaye += montant;
+            }
+
+            if ("EN_ATTENTE".equalsIgnoreCase(statut)) {
+                totalEnAttente += montant;
+            }
         }
         writeFile(workbook);
         workbook.close();
@@ -53,13 +81,14 @@ public class FacturePrestataireExcel{
 
 
     private static void writeFile(Workbook workbook) throws IOException {
-        FileOutputStream fout=new FileOutputStream("factureimpayeemois.xlsx");
+        FileOutputStream fout=new FileOutputStream("facturesprestatairemois.xlsx");
         workbook.write(fout);
         fout.close();
     }
     public static void main(String[] args) throws SQLException, IOException {
-        FacturesImpayéesExcel.execute();
+        FacturePrestataireExcel.execute();
     }
+
 }
 
 

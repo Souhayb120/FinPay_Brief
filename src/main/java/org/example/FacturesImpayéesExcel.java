@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FacturesImpayéesExcel {
-    private FacturesImpayéesExcel(){}
+    public FacturesImpayéesExcel(){}
     public static void execute() throws IOException, SQLException {
         String sql = "select facture.date_facture as Date ,facture.id as ID ,client.nom as Client,facture.montant as Montant,DATEDIFF(CURRENT_DATE,facture.date_facture) as Jours_de_retards\n" +
                 "from facture \n" +
