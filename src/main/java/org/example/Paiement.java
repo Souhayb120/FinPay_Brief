@@ -70,4 +70,7 @@ public class Paiement {
                   +
                 '}';
     }
+
+    public void setCommission(double v) {
+    }
 }
