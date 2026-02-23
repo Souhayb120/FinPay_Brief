@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 public class PaiementService {
     Scanner scanner= new Scanner(System.in);
@@ -27,47 +28,59 @@ public class PaiementService {
         FactureDao factureDao = new FactureDao();
         Facture facture = FactureDao.findById(con, idFacture);
         if (facture == null) {
-            System.out.println("Facture introuvable");
+            System.out.println("Facture introuvable !");
             return;
         }
 
-
-        double dejaPaye = facture.getMontant();
+        double dejaPaye = PaiementDAO.getTotalPaye(con, idFacture);
         double total = facture.getTotalmontant();
         double restant = total - dejaPaye;
 
         if (montant <= 0 || montant > restant) {
-            System.out.println("Montant invalide");
+            System.out.println("Montant invalide !");
             return;
         }
 
-
         double commission = calculerCommission(montant);
-
 
         Paiement p = new Paiement();
         p.setMontant(montant);
-        p.setCommission(commission);
         p.setDate(LocalDate.now());
         p.setIdFacture(idFacture);
+        p.setModePaiement(modePaiement);
 
-        paiementDAO.save(con, p);
+        con.setAutoCommit(false);
+        try {
+            int idPaiement = paiementDAO.save(con, p);
 
+            double nouveauMontant = dejaPaye + montant;
+            String status = (nouveauMontant == total) ? "Payée" : "Partiel";
 
-        double nouveauMontant = dejaPaye + montant;
-        String status = (nouveauMontant == total) ? "Payée" : "Partiel";
+            factureDao.modifierFactureAuto(con, idFacture, total, nouveauMontant, status,
+                    facture.getIdClient(), facture.getIdPrestataire());
 
-        factureDao.modifierFactureAuto(
-                con,
-                idFacture,
-                total,
-                nouveauMontant,
-                status,
-                facture.getIdClient(),
-                facture.getIdPrestataire()
-        );
+            con.commit();
 
-        System.out.println("Paiement partiel effectué avec succès");
+            double reste = total - nouveauMontant;
+
+            RecuPDFGenerator.genererRecu(
+                    idPaiement,
+                    idFacture,
+                    LocalDate.now(),
+                    modePaiement,
+                    montant,
+                    reste
+            );
+
+            System.out.println("Paiement partiel effectué avec succès !");
+
+        } catch (Exception e) {
+            con.rollback();
+            System.out.println("Erreur paiement, rollback effectué !");
+            e.printStackTrace();
+        } finally {
+            con.setAutoCommit(true);
+        }
     }
 
 }

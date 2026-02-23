@@ -12,6 +12,10 @@ public class PaiementDAO {
         try (
                 PreparedStatement ps = con.prepareStatement( "INSERT INTO paiement (montant, date_paiement,commission, id_facture ) VALUES (?,?,?,?)")) {
 
+    public int save(Connection con, Paiement p) throws SQLException {
+        String sql = "INSERT INTO paiement (montant, date_paiement, id_facture, mode_paiement) " +
+                "VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setDouble(1, p.getMontant());
             ps.setDate(2, Date.valueOf(p.getDate()));
             ps.setDouble(3, p.getCommission());
@@ -19,7 +23,10 @@ public class PaiementDAO {
 
 
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
         }
+        return 0;
     }
     public void update(Connection con) throws SQLException {
 
@@ -68,18 +75,13 @@ public class PaiementDAO {
 
 
     public static List<Paiement> findAll() throws SQLException {
-
         List<Paiement> paiements = new ArrayList<>();
-
         String sql = "SELECT * FROM paiement";
-
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 Paiement p = new Paiement();
-
                 p.setId(rs.getInt("id"));
                 p.setMontant(rs.getDouble("montant"));
                 p.setDate(rs.getDate("date_paiement").toLocalDate());
@@ -90,7 +92,6 @@ public class PaiementDAO {
                 paiements.add(p);
             }
         }
-
         return paiements;
     }
 

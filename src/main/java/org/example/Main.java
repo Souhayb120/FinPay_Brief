@@ -1,6 +1,8 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +19,7 @@ public class Main {
     }
 
     // ================= MAIN MENU =================
-    public static void mainMenu(Connection conn) {
+    public static void mainMenu(Connection conn) throws SQLException {
 
         int choice;
 
@@ -147,7 +149,7 @@ public class Main {
     }
 
     // ================= PAIEMENT =================
-    public static void paiementMenu(Connection conn) {
+    public static void paiementMenu(Connection conn) throws SQLException {
 
         PaiementDAO dao = new PaiementDAO();
         int choice;
@@ -158,6 +160,8 @@ public class Main {
             System.out.println("2. Lister paiements");
             System.out.println("3. gérer un paiement partiel");
             System.out.println("4. Update un paiement ");
+            System.out.println("5. Générer PDF d'un paiement");
+
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -179,9 +183,8 @@ public class Main {
                         System.out.print("ID facture: ");
                         p.setIdFacture(sc.nextInt());
 
-                        System.out.print("Commission: ");
-                        p.setCommission(sc.nextDouble());
-                        sc.nextLine();
+                        System.out.print("Mode de paiement: : ");
+                        p.setModePaiement(sc.nextLine());
 
                         dao.save(conn, p);
 
