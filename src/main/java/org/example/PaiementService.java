@@ -1,25 +1,30 @@
 package org.example;
-
+import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class PaiementService {
+    Scanner scanner= new Scanner(System.in);
     public double calculerCommission(double montant) {
         return montant * 0.02;
     }
+
     public void listerPaiements() throws SQLException {
         List<Paiement> list = PaiementDAO.findAll();
         list.forEach(System.out::println);
     }
 
-    public void effectuerPaiementPartiel(Connection con,
-                                         int idFacture,
-                                         double montant) throws SQLException {
-
-PaiementDAO paiementDAO = new PaiementDAO();
-FactureDao factureDao = new FactureDao();
+    public void effectuerPaiementPartiel(Connection con) throws SQLException {
+        System.out.println("Entrez id de facture: ");
+        int idFacture = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Entrez le montant: ");
+        double montant= scanner.nextDouble();
+        scanner.nextLine();
+        PaiementDAO paiementDAO = new PaiementDAO();
+        FactureDao factureDao = new FactureDao();
         Facture facture = FactureDao.findById(con, idFacture);
         if (facture == null) {
             System.out.println("Facture introuvable");
@@ -66,6 +71,3 @@ FactureDao factureDao = new FactureDao();
     }
 
 }
-
-
-
