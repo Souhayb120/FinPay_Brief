@@ -10,6 +10,9 @@ import java.sql.*;
 public class RapportGlobalExcel {
 
     public static void excecute() throws SQLException {
+        Connection conn = DatabaseConnection.getConnection();
+
+        System.out.println("le fichier  est cree ");
 
         String sql = "SELECT DATE_FORMAT(facture.date_facture, '%Y-%m') AS mois,\n" +
                 " prestataire.nom AS prestataire,\n" +
@@ -20,7 +23,6 @@ public class RapportGlobalExcel {
                 "JOIN facture ON facture.id_prestataire = prestataire.id \n" +
                 "GROUP BY DATE_FORMAT(facture.date_facture,'%Y-%m'), prestataire.nom \n" +
                 "ORDER BY mois;\n";
-        Connection conn = DatabaseConnection.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ResultSet rs = ps.executeQuery();
@@ -31,7 +33,7 @@ public class RapportGlobalExcel {
 
         // HEADER
         Row headerRow = sheet.createRow(0); // 0 is the index of the first row
-        String[] headers = {"mois","Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
+        String[] headers = {"mois", "Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
         //style
         CellStyle headerStyle = workbook.createCellStyle();
         Font boldFont = workbook.createFont();
@@ -53,19 +55,15 @@ public class RapportGlobalExcel {
             row.createCell(3).setCellValue(rs.getDouble("total_genere"));
             row.createCell(4).setCellValue(rs.getDouble("total_commission"));
         }
-try {
-    FileOutputStream fileOutputStream = new FileOutputStream("rapportglobalmois.xlsx");
-    workbook.write(fileOutputStream);
-    workbook.close();
-    fileOutputStream.close();
-} catch (Exception e) {
-    e.printStackTrace();
-}
-
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("rapportglobalmois.xlsx");
+            workbook.write(fileOutputStream);
+            workbook.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) throws SQLException {
-        RapportGlobalExcel.excecute();
-    }
 }
 

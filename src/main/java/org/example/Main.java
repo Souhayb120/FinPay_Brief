@@ -2,13 +2,10 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-
-   //private static final String url = "jdbc:mysql://localhost:3307/finpay";
-   // private static final String user = "root";
-  //  private static final String password = "Hiba11111";
 
     private static Scanner sc = new Scanner(System.in);
 
@@ -22,7 +19,7 @@ public class Main {
     }
 
     // ================= MAIN MENU =================
-    public static void mainMenu(Connection conn) {
+    public static void mainMenu(Connection conn) throws SQLException {
 
         int choice;
 
@@ -32,7 +29,8 @@ public class Main {
             System.out.println("2. Gestion Factures");
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
-            System.out.println("5. Gestion Clients");   // NEW
+            System.out.println("5. Gestion Clients");
+            System.out.println("6. Rapport Global Mensuel (Admin) – Excel");// NEW
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -44,7 +42,8 @@ public class Main {
                 case 2 -> factureMenu(conn);
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);   // NEW
+                case 5 -> clientMenu(conn);
+                case 6 -> RapportGlobalExcel.excecute();
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
