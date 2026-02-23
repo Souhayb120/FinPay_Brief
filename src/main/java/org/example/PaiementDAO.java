@@ -1,48 +1,77 @@
 package org.example;
-import java.sql.*;
-import java.sql.SQLException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 public class PaiementDAO {
 
-    public void save(Connection con,Paiement p) throws SQLException {
+    public int save(Connection con, Paiement p) throws SQLException {
 
-        try (
-             PreparedStatement ps = con.prepareStatement( "INSERT INTO paiement (montant, date_paiement, id_facture, commission) VALUES (?,?,?,?)")) {
+        String sql = "INSERT INTO paiement (montant, date_paiement, id_facture, mode_paiement) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDouble(1, p.getMontant());
             ps.setDate(2, Date.valueOf(p.getDate()));
             ps.setInt(3, p.getIdFacture());
-            ps.setDouble(4, p.getCommission());
+            ps.setString(4, p.getModePaiement());
 
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
         }
+
+        return 0;
     }
 
     public void update(Connection con,Paiement p) throws SQLException {
 
-        String sql = "UPDATE paiement SET montant = ?, date_paiement = ?, " +
-                "id_facture = ?, commission = ? WHERE id = ?";
+    public void update(Connection con, Scanner sc) throws SQLException {
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        System.out.print("Entrez id de paiement: ");
+        int id = sc.nextInt();
+        sc.nextLine();
 
-            ps.setDouble(1, p.getMontant());
-            ps.setDate(2, Date.valueOf(p.getDate()));
-            ps.setInt(3, p.getIdFacture());
-            ps.setDouble(4, p.getCommission());
-            ps.setInt(5, p.getId());
+        System.out.print("Entrez le montant: ");
+        double montant = sc.nextDouble();
+        sc.nextLine();
 
-            ps.executeUpdate();
+        System.out.print("Entrez date (YYYY-MM-DD): ");
+        LocalDate date = LocalDate.parse(sc.nextLine());
+
+        System.out.print("ID facture: ");
+        int idFacture = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Entrez le mode de paiement: ");
+        String modePaiement = sc.nextLine();
+
+        String sql = "UPDATE paiement SET montant = ?, date_paiement = ?, id_facture = ?, mode_paiement = ? WHERE id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setDouble(1, montant);
+            ps.setDate(2, Date.valueOf(date));
+            ps.setInt(3, idFacture);
+            ps.setString(4, modePaiement);
+            ps.setInt(5, id);
+
+            int rows = ps.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Paiement modifié avec succès");
+            } else {
+                System.out.println("Aucun paiement trouvé avec cet ID");
+            }
         }
     }
 
     public static List<Paiement> findAll() throws SQLException {
 
         List<Paiement> paiements = new ArrayList<>();
-
         String sql = "SELECT * FROM paiement";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -50,13 +79,13 @@ public class PaiementDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Paiement p = new Paiement();
 
+                Paiement p = new Paiement();
                 p.setId(rs.getInt("id"));
                 p.setMontant(rs.getDouble("montant"));
                 p.setDate(rs.getDate("date_paiement").toLocalDate());
                 p.setIdFacture(rs.getInt("id_facture"));
-                p.setCommission(rs.getDouble("commission"));
+                p.setModePaiement(rs.getString("mode_paiement"));
 
                 paiements.add(p);
             }
@@ -65,11 +94,45 @@ public class PaiementDAO {
         return paiements;
     }
 
+    public static double getTotalPaye(Connection con, int idFacture) throws SQLException {
 
+        String sql = "SELECT COALESCE(SUM(montant),0) FROM paiement WHERE id_facture = ?";
 
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
+            ps.setInt(1, idFacture);
+            ResultSet rs = ps.executeQuery();
 
+            if (rs.next()) return rs.getDouble(1);
+        }
+
+        return 0;
+    }
+
+    public Paiement findById(Connection con, int id) throws SQLException {
+
+        String sql = "SELECT * FROM paiement WHERE id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    Paiement p = new Paiement();
+                    p.setId(rs.getInt("id"));
+                    p.setMontant(rs.getDouble("montant"));
+                    p.setDate(rs.getDate("date_paiement").toLocalDate());
+                    p.setIdFacture(rs.getInt("id_facture"));
+                    p.setModePaiement(rs.getString("mode_paiement"));
+
+                    return p;
+                }
+            }
+        }
+
+        return null;
+    }
 }
-
-
-
