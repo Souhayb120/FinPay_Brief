@@ -91,7 +91,7 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
-            System.out.println("7. Générer PDF facture"); // <-- ADDED
+            System.out.println("7. Générer PDF facture");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -129,7 +129,7 @@ public class Main {
                     try { dao.filtrerParPrestataire(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
-                case 7 -> {   // <-- PDF OPTION
+                case 7 -> {
                     try {
                         System.out.print("Entrer id facture pour PDF : ");
                         int id = sc.nextInt();
