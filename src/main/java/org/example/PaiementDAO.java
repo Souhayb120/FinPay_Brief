@@ -9,14 +9,13 @@ import java.util.Scanner;
 public class PaiementDAO {
 
     public int save(Connection con, Paiement p) throws SQLException {
-        String sql = "INSERT INTO paiement (montant, date_paiement, commission, id_facture, mode_paiement) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO paiement (montant, date_paiement, id_facture, mode_paiement) " +
+                "VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setDouble(1, p.getMontant());
             ps.setDate(2, Date.valueOf(p.getDate()));
-            ps.setDouble(3, p.getCommission());
-            ps.setInt(4, p.getIdFacture());
-            ps.setString(5, p.getModePaiement());
+            ps.setInt(3, p.getIdFacture());
+            ps.setString(4, p.getModePaiement());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -48,15 +47,14 @@ public class PaiementDAO {
         System.out.print("Entrez le mode de paiement: ");
         String mode_paiement = sc.nextLine();
 
-        String sql = "UPDATE paiement SET montant = ?, date_paiement = ?, commission = ?, " +
+        String sql = "UPDATE paiement SET montant = ?, date_paiement = ? " +
                 "id_facture = ?, mode_paiement = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, montant);
             ps.setDate(2, Date.valueOf(date));
-            ps.setDouble(3, commission);
-            ps.setInt(4, idFacture);
-            ps.setString(5, mode_paiement);
-            ps.setInt(6, id);
+            ps.setInt(3, idFacture);
+            ps.setString(4, mode_paiement);
+            ps.setInt(5, id);
 
             int rows = ps.executeUpdate();
             System.out.println((rows > 0) ? "Paiement modifié avec succès" : "Aucun paiement trouvé avec cet ID");
@@ -74,7 +72,6 @@ public class PaiementDAO {
                 p.setId(rs.getInt("id"));
                 p.setMontant(rs.getDouble("montant"));
                 p.setDate(rs.getDate("date_paiement").toLocalDate());
-                p.setCommission(rs.getDouble("commission"));
                 p.setIdFacture(rs.getInt("id_facture"));
                 p.setModePaiement(rs.getString("mode_paiement"));
                 paiements.add(p);
@@ -103,7 +100,6 @@ public class PaiementDAO {
                     p.setId(rs.getInt("id"));
                     p.setMontant(rs.getDouble("montant"));
                     p.setDate(rs.getDate("date_paiement").toLocalDate());
-                    p.setCommission(rs.getDouble("commission"));
                     p.setIdFacture(rs.getInt("id_facture"));
                     p.setModePaiement(rs.getString("mode_paiement"));
                     return p;

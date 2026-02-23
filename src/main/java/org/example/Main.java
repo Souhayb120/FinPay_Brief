@@ -170,9 +170,8 @@ public class Main {
                         System.out.print("ID facture: ");
                         p.setIdFacture(sc.nextInt());
 
-                        System.out.print("Commission: ");
-                        p.setCommission(sc.nextDouble());
-                        sc.nextLine();
+                        System.out.print("Mode de paiement: : ");
+                        p.setModePaiement(sc.nextLine());
 
                         dao.save(conn, p);
 

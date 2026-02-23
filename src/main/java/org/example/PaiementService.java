@@ -56,7 +56,6 @@ public class PaiementService {
 
         Paiement p = new Paiement();
         p.setMontant(montant);
-        p.setCommission(commission);
         p.setDate(LocalDate.now());
         p.setIdFacture(idFacture);
         p.setModePaiement(modePaiement);
