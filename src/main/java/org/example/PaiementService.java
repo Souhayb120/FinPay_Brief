@@ -1,5 +1,5 @@
 package org.example;
-
+import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PaiementService {
-
-    private Scanner scanner = new Scanner(System.in);
-
+    Scanner scanner= new Scanner(System.in);
     public double calculerCommission(double montant) {
         return montant * 0.02;
     }
@@ -20,23 +18,14 @@ public class PaiementService {
     }
 
     public void effectuerPaiementPartiel(Connection con) throws SQLException {
-
-        System.out.println("===== Paiement Partiel =====");
-
-        System.out.print("Entrez id de facture : ");
+        System.out.println("Entrez id de facture: ");
         int idFacture = scanner.nextInt();
         scanner.nextLine();
-
-        System.out.print("Entrez le montant à payer : ");
-        double montant = scanner.nextDouble();
+        System.out.println("Entrez le montant: ");
+        double montant= scanner.nextDouble();
         scanner.nextLine();
-
-        System.out.print("Entrez le mode de paiement : ");
-        String modePaiement = scanner.nextLine();
-
         PaiementDAO paiementDAO = new PaiementDAO();
         FactureDao factureDao = new FactureDao();
-
         Facture facture = FactureDao.findById(con, idFacture);
         if (facture == null) {
             System.out.println("Facture introuvable !");
@@ -94,46 +83,4 @@ public class PaiementService {
         }
     }
 
-    public double calculerResteAPayer(Connection con, int idFacture) throws SQLException {
-        double montantTotal = FactureDao.getMontantTotal(con, idFacture);
-        double totalPaiements = PaiementDAO.getTotalPaye(con, idFacture);
-        return montantTotal - totalPaiements;
-    }
-    public static void genererPDF(Connection con, int idPaiement) throws SQLException {
-
-        PaiementDAO paiementDAO = new PaiementDAO();
-        Paiement paiement = paiementDAO.findById(con, idPaiement);
-
-        if (paiement == null) {
-            System.out.println(" Paiement introuvable !");
-            return;
-        }
-
-        FactureDao factureDao = new FactureDao();
-        Facture facture = factureDao.findById(con, paiement.getIdFacture());
-
-        if (facture == null) {
-            System.out.println(" Facture introuvable !");
-            return;
-        }
-
-        double reste = facture.getTotalmontant() - facture.getMontant();
-
-        System.out.println("ID Paiement : " + paiement.getId());
-        System.out.println("ID Facture  : " + facture.getId());
-        System.out.println("Date        : " + paiement.getDate());
-        System.out.println("Mode        : " + paiement.getModePaiement());
-        System.out.println("Montant     : " + paiement.getMontant());
-
-        RecuPDFGenerator.genererRecu(
-                paiement.getId(),
-                facture.getId(),
-                paiement.getDate(),
-                paiement.getModePaiement(),
-                paiement.getMontant(),
-                reste
-        );
-
-        System.out.println(" PDF généré avec succès !");
-    }
 }
