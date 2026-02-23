@@ -7,13 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PaiementService {
-<<<<<<< HEAD
 
     private Scanner scanner = new Scanner(System.in);
 
-=======
-    Scanner scanner= new Scanner(System.in);
->>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
     public double calculerCommission(double montant) {
         return montant * 0.02;
     }
@@ -24,7 +20,6 @@ public class PaiementService {
     }
 
     public void effectuerPaiementPartiel(Connection con) throws SQLException {
-<<<<<<< HEAD
 
         System.out.println("===== Paiement Partiel =====");
 
@@ -42,16 +37,6 @@ public class PaiementService {
         PaiementDAO paiementDAO = new PaiementDAO();
         FactureDao factureDao = new FactureDao();
 
-=======
-        System.out.println("Entrez id de facture: ");
-        int idFacture = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Entrez le montant: ");
-        double montant= scanner.nextDouble();
-        scanner.nextLine();
-        PaiementDAO paiementDAO = new PaiementDAO();
-        FactureDao factureDao = new FactureDao();
->>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
         Facture facture = FactureDao.findById(con, idFacture);
         if (facture == null) {
             System.out.println("Facture introuvable !");
@@ -76,14 +61,22 @@ public class PaiementService {
         p.setModePaiement(modePaiement);
 
         con.setAutoCommit(false);
+
         try {
             int idPaiement = paiementDAO.save(con, p);
 
             double nouveauMontant = dejaPaye + montant;
             String status = (nouveauMontant == total) ? "Payée" : "Partiel";
 
-            factureDao.modifierFactureAuto(con, idFacture, total, nouveauMontant, status,
-                    facture.getIdClient(), facture.getIdPrestataire());
+            factureDao.modifierFactureAuto(
+                    con,
+                    idFacture,
+                    total,
+                    nouveauMontant,
+                    status,
+                    facture.getIdClient(),
+                    facture.getIdPrestataire()
+            );
 
             con.commit();
 
@@ -101,27 +94,30 @@ public class PaiementService {
             System.out.println("Paiement partiel effectué avec succès !");
 
         } catch (Exception e) {
+
             con.rollback();
             System.out.println("Erreur paiement, rollback effectué !");
             e.printStackTrace();
+
         } finally {
+
             con.setAutoCommit(true);
         }
     }
 
-<<<<<<< HEAD
     public double calculerResteAPayer(Connection con, int idFacture) throws SQLException {
         double montantTotal = FactureDao.getMontantTotal(con, idFacture);
         double totalPaiements = PaiementDAO.getTotalPaye(con, idFacture);
         return montantTotal - totalPaiements;
     }
+
     public static void genererPDF(Connection con, int idPaiement) throws SQLException {
 
         PaiementDAO paiementDAO = new PaiementDAO();
         Paiement paiement = paiementDAO.findById(con, idPaiement);
 
         if (paiement == null) {
-            System.out.println(" Paiement introuvable !");
+            System.out.println("Paiement introuvable !");
             return;
         }
 
@@ -129,7 +125,7 @@ public class PaiementService {
         Facture facture = factureDao.findById(con, paiement.getIdFacture());
 
         if (facture == null) {
-            System.out.println(" Facture introuvable !");
+            System.out.println("Facture introuvable !");
             return;
         }
 
@@ -150,8 +146,6 @@ public class PaiementService {
                 reste
         );
 
-        System.out.println(" PDF généré avec succès !");
+        System.out.println("PDF généré avec succès !");
     }
-=======
->>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
 }
