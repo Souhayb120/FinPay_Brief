@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9a7c870c-73d3-4436-bd08-837f6d32f797" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Facture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Facture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FactureDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FactureDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaiementDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaiementDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaiementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaiementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RecuPDFGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RecuPDFGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
