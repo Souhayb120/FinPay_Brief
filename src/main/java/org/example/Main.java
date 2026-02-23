@@ -41,7 +41,7 @@ public class Main {
                 case 2 -> factureMenu(conn);
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);
+                case 5 -> clientMenu(conn);   // NEW
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
@@ -93,7 +93,6 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
-            System.out.println("7. Générer PDF facture");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -130,18 +129,6 @@ public class Main {
                     int idp = sc.nextInt();
                     try { dao.filtrerParPrestataire(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
-                }
-                case 7 -> {
-                    try {
-                        System.out.print("Entrer id facture pour PDF : ");
-                        int id = sc.nextInt();
-                        sc.nextLine();
-
-                        FacturePDFService.genererPDF(conn, id);
-
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
             }
 
@@ -216,16 +203,43 @@ public class Main {
                 case 4 -> {
                     try {
                         PaiementDAO p = new PaiementDAO();
+<<<<<<< HEAD
+                        p.update(conn,sc);
+=======
                         p.update(conn);
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
+<<<<<<< HEAD
+                case 5 ->{
+                    try {
+                        System.out.print("Entrez l'ID du paiement pour générer PDF : ");
+                        int idPaiement = sc.nextInt();
+                        sc.nextLine();
+
+                        PaiementService.genererPDF(conn, idPaiement);
+
+                    } catch (Exception e) {
+                        System.out.println(" Erreur lors de la génération du PDF");
+                        e.printStackTrace();
+                    }
+                    break;
+
+            }
+        }
+        }
+            while (choice != 0) ;
+        }
+
+=======
 
             }
         }
         while (choice != 0) ;
     }
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
 
     // ================= CLIENT =================
     public static void clientMenu(Connection conn) {
@@ -247,11 +261,26 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> { try { dao.ajouterClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
-                case 2 -> { try { dao.supprimerClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
-                case 3 -> { try { dao.modifierClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
-                case 4 -> { try { dao.chercherClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
-                case 5 -> { try { dao.listerClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
+                case 1 -> {
+                    try { dao.ajouterClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 2 -> {
+                    try { dao.supprimerClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 3 -> {
+                    try { dao.modifierClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 4 -> {
+                    try { dao.chercherClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 5 -> {
+                    try { dao.listerClient(conn); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
             }
 
         } while (choice != 0);
@@ -268,7 +297,6 @@ public class Main {
         System.out.println("Total commissions: " + stats.getTotalCommissions());
         System.out.println("Factures payées: " + stats.getFacturesPayees());
         System.out.println("Factures non payées: " + stats.getFacturesNonPayees());
-        System.out.println("Factures Partiel: " + stats.getFacturesPartiel());
         System.out.println("Total transactions: " + stats.getTotalTransactions());
     }
 }
