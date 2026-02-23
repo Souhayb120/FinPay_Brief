@@ -120,7 +120,7 @@ public class PaiementService {
             System.out.println("Paiement introuvable !");
             return;
         }
-
+        System.out.println("Paiement trouvé, id_facture = " + paiement.getIdFacture());
         FactureDao factureDao = new FactureDao();
         Facture facture = factureDao.findById(con, paiement.getIdFacture());
 

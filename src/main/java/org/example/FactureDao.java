@@ -53,24 +53,22 @@ public class FactureDao {
        }
     }
 
-    public static Facture findById(Connection con, int id)throws SQLException {
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM facture WHERE id = ?  ");
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+    public static Facture findById(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM facture WHERE id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
-            int factureId = rs.getInt("id");
-            LocalDate dateFacture = rs.getDate("date_facture").toLocalDate();
-            String status = rs.getString("status");
-            int idClient = rs.getInt("id_client");
-            int idPrestataire = rs.getInt("id_prestataire");
-
-            System.out.println("ID : " + factureId);
-            System.out.println("Date : " + dateFacture);
-            System.out.println("Status : " + status);
-            System.out.println("Id Client : " + idClient);
-            System.out.println("Id Prestataire : " + idPrestataire);
-
+            if (rs.next()) {
+                Facture f = new Facture();
+                f.setId(rs.getInt("id"));
+                f.setMontant(rs.getDouble("montant"));
+                f.setTotalmontant(rs.getDouble("montant_total"));
+                f.setStatus(rs.getString("status"));
+                f.setIdClient(rs.getInt("id_client"));
+                f.setIdPrestataire(rs.getInt("id_prestataire"));
+                return f;
+            }
         }
         return null;
     }
