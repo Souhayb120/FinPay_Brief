@@ -16,6 +16,9 @@
 
     <dependencies>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
         <!-- OpenPDF for PDF generation -->
         <dependency>
             <groupId>com.github.librepdf</groupId>
@@ -29,9 +32,12 @@
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
         </dependency>
+<<<<<<< HEAD
     </dependencies>
 =======
 >>>>>>> 212da713e36a658e87ce06873f2bca5b2e320472
+=======
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
 
         <!-- PDF engine -->
         <dependency>

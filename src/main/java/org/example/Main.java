@@ -203,11 +203,16 @@ public class Main {
                 case 4 -> {
                     try {
                         PaiementDAO p = new PaiementDAO();
+<<<<<<< HEAD
                         p.update(conn,sc);
+=======
+                        p.update(conn);
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
+<<<<<<< HEAD
                 case 5 ->{
                     try {
                         System.out.print("Entrez l'ID du paiement pour générer PDF : ");
@@ -228,6 +233,13 @@ public class Main {
             while (choice != 0) ;
         }
 
+=======
+
+            }
+        }
+        while (choice != 0) ;
+    }
+>>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
 
     // ================= CLIENT =================
     public static void clientMenu(Connection conn) {
