@@ -15,6 +15,7 @@
     </properties>
 
     <dependencies>
+<<<<<<< HEAD
         <!-- OpenPDF for PDF generation -->
         <dependency>
             <groupId>com.github.librepdf</groupId>
@@ -28,6 +29,24 @@
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
         </dependency>
+    </dependencies>
+=======
+>>>>>>> 212da713e36a658e87ce06873f2bca5b2e320472
+
+        <!-- PDF engine -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.2.5</version>
+        </dependency>
+
+        <!-- tables, text, layout -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.2.5</version>
+        </dependency>
+
     </dependencies>
 
 </project>

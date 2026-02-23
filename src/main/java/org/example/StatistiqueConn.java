@@ -18,6 +18,7 @@ public class StatistiqueConn {
         double totalCommissions = 0;
         int facturesPayees = 0;
         int facturesNonPayees = 0;
+        int facturesP = 0;
         int totalTransactions = 0;
 
         try {
@@ -43,7 +44,7 @@ public class StatistiqueConn {
             }
 
             // Factures payées
-            String sqlFacturesPayees = "SELECT COUNT(*) FROM facture WHERE statut = 'PAYEE'";
+            String sqlFacturesPayees = "SELECT COUNT(*) FROM facture WHERE status = 'Payée'";
             try (PreparedStatement ps = connection.prepareStatement(sqlFacturesPayees);
                  ResultSet rs = ps.executeQuery()) {
 
@@ -53,12 +54,22 @@ public class StatistiqueConn {
             }
 
             // Factures non payées
-            String sqlFacturesNonPayees = "SELECT COUNT(*) FROM facture WHERE statut = 'NON_PAYEE'";
+            String sqlFacturesNonPayees = "SELECT COUNT(*) FROM facture WHERE status = 'Non payée'";
             try (PreparedStatement ps = connection.prepareStatement(sqlFacturesNonPayees);
                  ResultSet rs = ps.executeQuery()) {
 
                 if (rs.next()) {
                     facturesNonPayees = rs.getInt(1);
+                }
+            }
+
+            // Factures partiel
+            String sqlFacturesPartiel = "SELECT COUNT(*) FROM facture WHERE status = 'Partiel'";
+            try (PreparedStatement ps = connection.prepareStatement(sqlFacturesPartiel);
+                 ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+                    facturesP = rs.getInt(1);
                 }
             }
 
@@ -76,6 +87,6 @@ public class StatistiqueConn {
             System.out.println("Erreur statistiques : " + e.getMessage());
         }
 
-        return new Statistique(totalPaiements, totalCommissions, facturesPayees, facturesNonPayees, totalTransactions);
+        return new Statistique(totalPaiements, totalCommissions, facturesPayees, facturesNonPayees,facturesP, totalTransactions);
     }
 }
