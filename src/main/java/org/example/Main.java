@@ -82,6 +82,8 @@ public class Main {
     public static void factureMenu(Connection conn) {
 
         FactureDao dao = new FactureDao();
+        FacturePDFService fg = new FacturePDFService();
+
         int choice;
 
         do {
@@ -92,6 +94,7 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
+            System.out.println("7. Generer Facture PDF");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -127,6 +130,13 @@ public class Main {
                     System.out.print("ID prestataire: ");
                     int idp = sc.nextInt();
                     try { dao.filtrerParPrestataire(conn,idp); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 7 -> {
+                    System.out.print("ID Facture: ");
+                    int idp = sc.nextInt();
+
+                    try {  fg.genererPDF(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
             }
