@@ -44,10 +44,7 @@ public void ajouterClient(Connection conn) throws SQLException {
 
 
         }
-
-
-
-        public void modifierClient(Connection conn) throws SQLException {
+        public void modifierClient(Connection con) throws SQLException {
             System.out.print("Entrer l'ID du client à modifier : ");
             int id = sc.nextInt();
             sc.nextLine();
@@ -60,9 +57,8 @@ public void ajouterClient(Connection conn) throws SQLException {
             ps.setInt(2, id);
             ps.executeUpdate();
         }
-
-        public void listerClient(Connection conn) throws SQLException {
-            Statement st = conn.createStatement();
+        public void listerClient(Connection con) throws SQLException {
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM client");
 
             System.out.println("=== Liste des clients ===");

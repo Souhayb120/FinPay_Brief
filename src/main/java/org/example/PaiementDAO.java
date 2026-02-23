@@ -1,6 +1,5 @@
 package org.example;
 
-import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +26,8 @@ public class PaiementDAO {
 
         return 0;
     }
+
+    public void update(Connection con,Paiement p) throws SQLException {
 
     public void update(Connection con, Scanner sc) throws SQLException {
 

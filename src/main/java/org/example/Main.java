@@ -76,6 +76,7 @@ public class Main {
                 case 3 -> dao.recherchPrestataire(conn);
                 case 4 -> dao.modifierPrestataire(conn);
                 case 5 -> dao.listerPrestataire(conn);
+
             }
 
         } while (choice != 0);
@@ -95,6 +96,8 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
+            System.out.println("7. Facture Impayees");
+            System.out.println("8. Facture d'un presataire");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -132,6 +135,17 @@ public class Main {
                     try { dao.filtrerParPrestataire(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
+                case 7 -> {
+
+                    try { FacturesImpayéesExcel.execute();}
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 8 -> {
+
+                    try { FacturePrestataireExcel.execute();}
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+
             }
 
         } while (choice != 0);
