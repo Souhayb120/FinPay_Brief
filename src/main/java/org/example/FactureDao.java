@@ -25,16 +25,16 @@ public class FactureDao {
         }else {
             status="Payée";
         }
-      try(PreparedStatement ps = con.prepareStatement("INSERT INTO facture(date_facture,status,id_client,id_prestataire,montant_total,montant) VALUES(?,?,?,?,?,?)")) {
-          ps.setDate(1, Date.valueOf(LocalDate.now()));
-          ps.setString(2, status);
-          ps.setInt(3, idClient);
-          ps.setInt(4, idPrestataire);
-          ps.setDouble(5, totalMontant);
-          ps.setDouble(6, montant);
-          ps.executeUpdate();
-          System.out.println("Ajouter facture success");
-      }
+        try(PreparedStatement ps = con.prepareStatement("INSERT INTO facture(date_facture,status,id_client,id_prestataire,montant_total,montant) VALUES(?,?,?,?,?,?)")) {
+            ps.setDate(1, Date.valueOf(LocalDate.now()));
+            ps.setString(2, status);
+            ps.setInt(3, idClient);
+            ps.setInt(4, idPrestataire);
+            ps.setDouble(5, totalMontant);
+            ps.setDouble(6, montant);
+            ps.executeUpdate();
+            System.out.println("Ajouter facture success");
+        }
     }
 
     public void supprimerFacture(Connection con)throws SQLException{
@@ -42,35 +42,33 @@ public class FactureDao {
         System.out.println("Entrer id supprimer");
         int id=sc.nextInt();
         sc.nextLine();
-       try(PreparedStatement ps = con.prepareStatement("DELETE FROM facture where id =?")) {
-           ps.setInt(1,id);
-           int sup = ps.executeUpdate();
-           if (sup > 0) {
-               System.out.println("Facture est supprimer");
-           } else {
-               System.out.println("Aucun facture de supprimer ");
-           }
-       }
+        try(PreparedStatement ps = con.prepareStatement("DELETE FROM facture where id =?")) {
+            ps.setInt(1,id);
+            int sup = ps.executeUpdate();
+            if (sup > 0) {
+                System.out.println("Facture est supprimer");
+            } else {
+                System.out.println("Aucun facture de supprimer ");
+            }
+        }
     }
 
-    public static Facture findById(Connection con, int id)throws SQLException {
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM facture WHERE id = ?  ");
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+    public static Facture findById(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM facture WHERE id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
-            int factureId = rs.getInt("id");
-            LocalDate dateFacture = rs.getDate("date_facture").toLocalDate();
-            String status = rs.getString("status");
-            int idClient = rs.getInt("id_client");
-            int idPrestataire = rs.getInt("id_prestataire");
-
-            System.out.println("ID : " + factureId);
-            System.out.println("Date : " + dateFacture);
-            System.out.println("Status : " + status);
-            System.out.println("Id Client : " + idClient);
-            System.out.println("Id Prestataire : " + idPrestataire);
-
+            if (rs.next()) {
+                Facture f = new Facture();
+                f.setId(rs.getInt("id"));
+                f.setMontant(rs.getDouble("montant"));
+                f.setTotalmontant(rs.getDouble("montant_total"));
+                f.setStatus(rs.getString("status"));
+                f.setIdClient(rs.getInt("id_client"));
+                f.setIdPrestataire(rs.getInt("id_prestataire"));
+                return f;
+            }
         }
         return null;
     }
@@ -89,31 +87,31 @@ public class FactureDao {
 
     public void listerFacture(Connection con )throws SQLException{
         System.out.println("====Afficher Facture=====");
-      try (PreparedStatement ps= con.prepareStatement("SELECT * FROM facture")) {
+        try (PreparedStatement ps= con.prepareStatement("SELECT * FROM facture")) {
 
-          ResultSet rs = ps.executeQuery();
-          while (rs.next()) {
-              System.out.println("id" + rs.getInt("id"));
-              System.out.println("status" + rs.getString("status"));
-              System.out.println("Date" + rs.getDate("date_facture"));
-              System.out.println("id client" + rs.getInt("id_client"));
-              System.out.println("id prestataire" + rs.getInt("id_prestataire"));
-          }
-      }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("id" + rs.getInt("id"));
+                System.out.println("status" + rs.getString("status"));
+                System.out.println("Date" + rs.getDate("date_facture"));
+                System.out.println("id client" + rs.getInt("id_client"));
+                System.out.println("id prestataire" + rs.getInt("id_prestataire"));
+            }
+        }
     }
 
     public void filtrerParstatus(Connection con ,String status)throws SQLException{
-     try(PreparedStatement ps =con.prepareStatement("SELECT * FROM facture WHERE status=?")) {
-        ps.setString(1,status);
-        ResultSet rs = ps.executeQuery();
-         System.out.println(" Filtrer status facture est "+status);
-        while (rs.next()){
-            System.out.println("ID"+rs.getInt("id"));
-            System.out.println("Status"+rs.getString("status"));
-            System.out.println("Client id"+rs.getInt("id_client"));
-            System.out.println("Prestataire id"+rs.getInt("id_prestataire"));
+        try(PreparedStatement ps =con.prepareStatement("SELECT * FROM facture WHERE status=?")) {
+            ps.setString(1,status);
+            ResultSet rs = ps.executeQuery();
+            System.out.println(" Filtrer status facture est "+status);
+            while (rs.next()){
+                System.out.println("ID"+rs.getInt("id"));
+                System.out.println("Status"+rs.getString("status"));
+                System.out.println("Client id"+rs.getInt("id_client"));
+                System.out.println("Prestataire id"+rs.getInt("id_prestataire"));
+            }
         }
-     }
     }
 
     public void filtrerParPrestataire(Connection con ,int idPrestataire)throws SQLException{

@@ -29,6 +29,7 @@ public class Main {
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
             System.out.println("5. Gestion Clients");
+            System.out.println("6. Rapport Global Excel");
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -36,13 +37,31 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> prestataireMenu(conn);
-                case 2 -> factureMenu(conn);
-                case 3 -> paiementMenu(conn);
-                case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);
-                case 0 -> System.out.println("Au revoir");
-                default -> System.out.println("Choix invalide");
+                case 1:
+                    prestataireMenu(conn);
+                    break;
+                case 2:
+                    factureMenu(conn);
+                    break;
+                case 3:
+                    paiementMenu(conn);
+                    break;
+                case 4:
+                    statistiquesMenu(conn);
+                    break;
+                case 5:
+                    clientMenu(conn);
+                    break;
+                case 7:
+                    RapportGlobalExel gb = new RapportGlobalExel();
+                   gb.excecute();
+                    break;
+                case 0:
+                    System.out.println("Au revoir");
+                    break;
+                default:
+                    System.out.println("Choix invalide");
+                    break;
             }
 
         } while (choice != 0);

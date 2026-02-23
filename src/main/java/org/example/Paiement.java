@@ -67,7 +67,7 @@ public class Paiement {
                 ", montant=" + montant +
                 ", date=" + date +
                 ", idFacture=" + idFacture +
-                  +
-                '}';
+                +
+                        '}';
     }
 }

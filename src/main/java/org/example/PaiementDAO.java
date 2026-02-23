@@ -109,29 +109,21 @@ public class PaiementDAO {
     }
 
     public Paiement findById(Connection con, int id) throws SQLException {
-
         String sql = "SELECT * FROM paiement WHERE id = ?";
-
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-
-                if (rs.next()) {
-
-                    Paiement p = new Paiement();
-                    p.setId(rs.getInt("id"));
-                    p.setMontant(rs.getDouble("montant"));
-                    p.setDate(rs.getDate("date_paiement").toLocalDate());
-                    p.setIdFacture(rs.getInt("id_facture"));
-                    p.setModePaiement(rs.getString("mode_paiement"));
-
-                    return p;
-                }
+            if (rs.next()) {
+                Paiement p = new Paiement();
+                p.setId(rs.getInt("id"));
+                p.setIdFacture(rs.getInt("id_facture"));
+                p.setMontant(rs.getDouble("montant"));
+                p.setDate(rs.getDate("date_paiement").toLocalDate());
+                p.setModePaiement(rs.getString("mode_paiement"));
+                return p;
             }
         }
-
         return null;
     }
 }
