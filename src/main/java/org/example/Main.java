@@ -2,7 +2,6 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -41,7 +40,7 @@ public class Main {
                 case 2 -> factureMenu(conn);
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);   // NEW
+                case 5 -> clientMenu(conn);
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
@@ -148,7 +147,6 @@ public class Main {
             System.out.println("3. gérer un paiement partiel");
             System.out.println("4. Update un paiement ");
             System.out.println("5. Générer PDF d'un paiement");
-
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -156,6 +154,7 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
+
                 case 1 -> {
                     try {
                         Paiement p = new Paiement();
@@ -169,8 +168,9 @@ public class Main {
 
                         System.out.print("ID facture: ");
                         p.setIdFacture(sc.nextInt());
+                        sc.nextLine();
 
-                        System.out.print("Mode de paiement: : ");
+                        System.out.print("Mode de paiement: ");
                         p.setModePaiement(sc.nextLine());
 
                         dao.save(conn, p);
@@ -200,20 +200,17 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                 }
+
                 case 4 -> {
                     try {
                         PaiementDAO p = new PaiementDAO();
-<<<<<<< HEAD
-                        p.update(conn,sc);
-=======
-                        p.update(conn);
->>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
+                        p.update(conn, sc);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
-<<<<<<< HEAD
-                case 5 ->{
+
+                case 5 -> {
                     try {
                         System.out.print("Entrez l'ID du paiement pour générer PDF : ");
                         int idPaiement = sc.nextInt();
@@ -222,24 +219,14 @@ public class Main {
                         PaiementService.genererPDF(conn, idPaiement);
 
                     } catch (Exception e) {
-                        System.out.println(" Erreur lors de la génération du PDF");
+                        System.out.println("Erreur lors de la génération du PDF");
                         e.printStackTrace();
                     }
-                    break;
-
+                }
             }
-        }
-        }
-            while (choice != 0) ;
-        }
 
-=======
-
-            }
-        }
-        while (choice != 0) ;
+        } while (choice != 0);
     }
->>>>>>> 847a0e9e544a4301c365871a98ff86d847a4178f
 
     // ================= CLIENT =================
     public static void clientMenu(Connection conn) {
