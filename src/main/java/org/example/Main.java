@@ -27,7 +27,7 @@ public class Main {
             System.out.println("2. Gestion Factures");
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
-            System.out.println("5. Gestion Clients");   // NEW
+            System.out.println("5. Gestion Clients");
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -39,7 +39,7 @@ public class Main {
                 case 2 -> factureMenu(conn);
                 case 3 -> paiementMenu(conn);
                 case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);   // NEW
+                case 5 -> clientMenu(conn);
                 case 0 -> System.out.println("Au revoir");
                 default -> System.out.println("Choix invalide");
             }
@@ -91,6 +91,7 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
+            System.out.println("7. Générer PDF facture");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -128,6 +129,18 @@ public class Main {
                     try { dao.filtrerParPrestataire(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
+                case 7 -> {
+                    try {
+                        System.out.print("Entrer id facture pour PDF : ");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+
+                        FacturePDFService.genererPDF(conn, id);
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
 
         } while (choice != 0);
@@ -143,6 +156,8 @@ public class Main {
             System.out.println("\n--- MENU PAIEMENT ---");
             System.out.println("1. Ajouter paiement");
             System.out.println("2. Lister paiements");
+            System.out.println("3. gérer un paiement partiel");
+            System.out.println("4. Update un paiement ");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -168,7 +183,7 @@ public class Main {
                         p.setCommission(sc.nextDouble());
                         sc.nextLine();
 
-                        dao.save(conn,p);
+                        dao.save(conn, p);
 
                         System.out.println("Paiement ajouté ✔");
 
@@ -186,9 +201,27 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                 }
-            }
 
-        } while (choice != 0);
+                case 3 -> {
+                    try {
+                        PaiementService paiementService = new PaiementService();
+                        paiementService.effectuerPaiementPartiel(conn);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        PaiementDAO p = new PaiementDAO();
+                        p.update(conn);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+            }
+        }
+        while (choice != 0) ;
     }
 
     // ================= CLIENT =================
@@ -211,26 +244,11 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> {
-                    try { dao.ajouterClient(conn); }
-                    catch (Exception e){ System.out.println(e.getMessage()); }
-                }
-                case 2 -> {
-                    try { dao.supprimerClient(conn); }
-                    catch (Exception e){ System.out.println(e.getMessage()); }
-                }
-                case 3 -> {
-                    try { dao.modifierClient(conn); }
-                    catch (Exception e){ System.out.println(e.getMessage()); }
-                }
-                case 4 -> {
-                    try { dao.chercherClient(conn); }
-                    catch (Exception e){ System.out.println(e.getMessage()); }
-                }
-                case 5 -> {
-                    try { dao.listerClient(conn); }
-                    catch (Exception e){ System.out.println(e.getMessage()); }
-                }
+                case 1 -> { try { dao.ajouterClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
+                case 2 -> { try { dao.supprimerClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
+                case 3 -> { try { dao.modifierClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
+                case 4 -> { try { dao.chercherClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
+                case 5 -> { try { dao.listerClient(conn); } catch (Exception e){ System.out.println(e.getMessage()); } }
             }
 
         } while (choice != 0);
