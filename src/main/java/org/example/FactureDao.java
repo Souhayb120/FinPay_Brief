@@ -2,6 +2,7 @@ package org.example;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class FactureDao {
@@ -140,5 +141,10 @@ public class FactureDao {
         }
         return 0;
     }
+
+
+
+
+
 
 }
