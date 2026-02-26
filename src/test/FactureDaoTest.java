@@ -18,12 +18,12 @@ public class FactureDaoTest {
         assertEquals(1100,FactureDao.totalFacturePrestataire(conn,1));
     }
     @Test
-    public void totalFacturePrestataire1() throws SQLException {
+    public void FacturePrestataireVide() throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
         assertEquals(0,FactureDao.totalFacturePrestataire(conn,32));
     }
     @Test
-    public void totalFacturePrestataire3() throws SQLException {
+    public void FacturePrestataire() throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
         assertEquals(233,FactureDao.totalFacturePrestataire(conn,3));
     }
