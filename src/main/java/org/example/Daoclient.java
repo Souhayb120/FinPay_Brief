@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.Scanner;
 
     public class Daoclient {
-        private Scanner sc = new Scanner(System.in);
+        private final Scanner sc = new Scanner(System.in);
 
 public void ajouterClient(Connection conn) throws SQLException {
        System.out.println("=========== Ajouter Client ==========");
@@ -44,7 +44,7 @@ public void ajouterClient(Connection conn) throws SQLException {
 
 
         }
-        public void modifierClient(Connection con) throws SQLException {
+        public void modifierClient(Connection conn) throws SQLException {
             System.out.print("Entrer l'ID du client à modifier : ");
             int id = sc.nextInt();
             sc.nextLine();

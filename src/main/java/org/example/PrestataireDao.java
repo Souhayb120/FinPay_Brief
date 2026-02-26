@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PrestataireDao {
-    private Scanner sc=new Scanner(System.in);
+    private final Scanner sc=new Scanner(System.in);
 
     public void ajouterPrestataire(Connection conn) {
         System.out.println("===Ajouter un prestataire ===");

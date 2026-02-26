@@ -1,8 +1,5 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Paiement {
@@ -20,8 +17,6 @@ public class Paiement {
         this.idFacture = idFacture;
         this.modePaiement = modePaiement;
     }
-
-
 
     public int getId() {
         return id;
@@ -72,10 +67,7 @@ public class Paiement {
                 ", montant=" + montant +
                 ", date=" + date +
                 ", idFacture=" + idFacture +
-                  +
-                '}';
-    }
-
-    public void setCommission(double v) {
+                +
+                        '}';
     }
 }

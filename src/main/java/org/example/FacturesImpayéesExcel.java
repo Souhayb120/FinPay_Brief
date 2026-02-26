@@ -18,9 +18,11 @@ import java.sql.SQLException;
 public class FacturesImpayéesExcel {
     public FacturesImpayéesExcel(){}
     public static void execute() throws IOException, SQLException {
-        String sql = "select facture.date_facture as Date ,facture.id as ID ,client.nom as Client,facture.montant as Montant,DATEDIFF(CURRENT_DATE,facture.date_facture) as Jours_de_retards\n" +
-                "from facture \n" +
-                "join client on facture.id_client=client.id;";
+        String sql = "SELECT facture.date_facture AS Date, facture.id AS ID, " +
+                "client.nom AS Client, facture.montant AS Montant, " +
+                "DATEDIFF(CURRENT_DATE, facture.date_facture) AS Jours_de_retards, " +
+                "FROM facture " +
+                "JOIN client ON facture.id_client = client.id";
         Connection conn =DatabaseConnection.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -43,7 +45,6 @@ public class FacturesImpayéesExcel {
             Row row = sheet.createRow(rindex ++);
             java.sql.Date date = rs.getDate("Date");
             row.createCell(0).setCellValue(date.toString());
-
             row.createCell(1).setCellValue(rs.getInt("ID"));
             row.createCell(2).setCellValue(rs.getString("Client"));
             row.createCell(3).setCellValue(rs. getDouble("Montant"));

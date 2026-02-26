@@ -1,12 +1,12 @@
 package org.example;
 
 public class Statistique {
-    private double totalPaiements;
-    private double totalCommissions;
-    private int facturesPayees;
-    private int facturesNonPayees;
+    private final double totalPaiements;
+    private final double totalCommissions;
+    private final int facturesPayees;
+    private final int facturesNonPayees;
     private int facturesPartiel;
-    private int totalTransactions;
+    private final int totalTransactions;
 
     public Statistique(double totalPaiements, double totalCommissions, int facturesPayees, int facturesNonPayees,int facturesPartiel, int totalTransactions) {
         this.totalPaiements = totalPaiements;

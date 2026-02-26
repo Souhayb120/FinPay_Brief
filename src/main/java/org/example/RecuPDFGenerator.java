@@ -1,5 +1,5 @@
 package org.example;
-
+import java.io.InputStream;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -30,11 +30,24 @@ public class RecuPDFGenerator {
             Document document = new Document(PageSize.A4);
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
+            // ===== LOGO =====
+            InputStream logoStream = RecuPDFGenerator.class
+                    .getClassLoader()
+                    .getResourceAsStream("f.png");
 
+            if (logoStream != null) {
+                Image logo = Image.getInstance(logoStream.readAllBytes());
+                logo.scaleAbsolute(120, 120);
+                logo.setAlignment(Image.ALIGN_CENTER);
+                logo.setSpacingAfter(15);
+                document.add(logo);
+            } else {
+                System.out.println("Logo introuvable dans resources !");
+            }
             Font titleFont = FontFactory.getFont(
                     FontFactory.HELVETICA_BOLD,
                     20,
-                    new Color(0, 102, 204) // bleu pro
+                    new Color(0, 102, 204)
             );
 
             Font labelFont = FontFactory.getFont(
