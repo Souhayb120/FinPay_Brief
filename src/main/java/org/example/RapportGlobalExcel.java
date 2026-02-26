@@ -26,18 +26,18 @@ public class RapportGlobalExcel {
         PreparedStatement ps = conn.prepareStatement(sql);
 
         ResultSet rs = ps.executeQuery();
-        //xlsx file
+
         Workbook workbook = new XSSFWorkbook();
-        //name of the sheet
+
         Sheet sheet = workbook.createSheet("Rapport Global");
 
-        // HEADER
-        Row headerRow = sheet.createRow(0); // 0 is the index of the first row
+
+        Row headerRow = sheet.createRow(0);
         String[] headers = {"mois", "Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
-        //style
+
         CellStyle headerStyle = workbook.createCellStyle();
         Font boldFont = workbook.createFont();
-        boldFont.setBold(true);// make font bold
+        boldFont.setBold(true);
         headerStyle.setFont(boldFont);
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
@@ -45,7 +45,7 @@ public class RapportGlobalExcel {
             cell.setCellStyle(headerStyle);
             sheet.setColumnWidth(i, 8000);
         }
-        //DATA
+
         int rowsIndex = 1;
         while (rs.next()) {
             Row row = sheet.createRow(rowsIndex++);
@@ -54,6 +54,7 @@ public class RapportGlobalExcel {
             row.createCell(2).setCellValue(rs.getInt("nombre_factures"));
             row.createCell(3).setCellValue(rs.getDouble("total_genere"));
             row.createCell(4).setCellValue(rs.getDouble("total_commission"));
+
         }
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("rapportglobalmois.xlsx");

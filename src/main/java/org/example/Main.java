@@ -1,7 +1,6 @@
 package org.example;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -30,7 +29,7 @@ public class Main {
             System.out.println("3. Gestion Paiements");
             System.out.println("4. Statistiques");
             System.out.println("5. Gestion Clients");
-            System.out.println("6. Rapport Global Mensuel (Admin) – Excel");// NEW
+            System.out.println("6. Rapport Global Excel");
             System.out.println("0. Quitter");
             System.out.print("Choix: ");
 
@@ -38,14 +37,30 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> prestataireMenu(conn);
-                case 2 -> factureMenu(conn);
-                case 3 -> paiementMenu(conn);
-                case 4 -> statistiquesMenu(conn);
-                case 5 -> clientMenu(conn);
-                case 6 -> RapportGlobalExcel.excecute();
-                case 0 -> System.out.println("Au revoir");
-                default -> System.out.println("Choix invalide");
+                case 1:
+                    prestataireMenu(conn);
+                    break;
+                case 2:
+                    factureMenu(conn);
+                    break;
+                case 3:
+                    paiementMenu(conn);
+                    break;
+                case 4:
+                    statistiquesMenu(conn);
+                    break;
+                case 5:
+                    clientMenu(conn);
+                    break;
+                case 7:
+                  RapportGlobalExcel.excecute();
+                    break;
+                case 0:
+                    System.out.println("Au revoir");
+                    break;
+                default:
+                    System.out.println("Choix invalide");
+                    break;
             }
 
         } while (choice != 0);
@@ -76,7 +91,6 @@ public class Main {
                 case 3 -> dao.recherchPrestataire(conn);
                 case 4 -> dao.modifierPrestataire(conn);
                 case 5 -> dao.listerPrestataire(conn);
-
             }
 
         } while (choice != 0);
@@ -86,6 +100,8 @@ public class Main {
     public static void factureMenu(Connection conn) {
 
         FactureDao dao = new FactureDao();
+        FacturePDFService fg = new FacturePDFService();
+
         int choice;
 
         do {
@@ -96,11 +112,11 @@ public class Main {
             System.out.println("4. Lister factures");
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
-            System.out.println("7. Facture Impayees");
-            System.out.println("8. Facture d'un presataire");
+            System.out.println("7. Generer Facture PDF");
+            System.out.println("8. Factures Impayées Excel");
+            System.out.println("9. Facture Prestataire Excel");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
-
             choice = sc.nextInt();
             sc.nextLine();
 
@@ -136,23 +152,28 @@ public class Main {
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
                 case 7 -> {
-
-                    try { FacturesImpayéesExcel.execute();}
+                    System.out.print("ID Facture: ");
+                    int idp = sc.nextInt();
+                    try {  fg.genererPDF(conn,idp); }
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
                 case 8 -> {
 
+                    try { FacturesImpayéesExcel.execute();}
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 9 -> {
+
                     try { FacturePrestataireExcel.execute();}
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
-
             }
 
         } while (choice != 0);
     }
 
     // ================= PAIEMENT =================
-    public static void paiementMenu(Connection conn) {
+    public static void paiementMenu(Connection conn) throws SQLException {
 
         PaiementDAO dao = new PaiementDAO();
         int choice;
@@ -161,6 +182,9 @@ public class Main {
             System.out.println("\n--- MENU PAIEMENT ---");
             System.out.println("1. Ajouter paiement");
             System.out.println("2. Lister paiements");
+            System.out.println("3. gérer un paiement partiel");
+            System.out.println("4. Update un paiement ");
+            System.out.println("5. Générer PDF d'un paiement");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
 
@@ -168,6 +192,7 @@ public class Main {
             sc.nextLine();
 
             switch (choice) {
+
                 case 1 -> {
                     try {
                         Paiement p = new Paiement();
@@ -181,12 +206,12 @@ public class Main {
 
                         System.out.print("ID facture: ");
                         p.setIdFacture(sc.nextInt());
-
-                        System.out.print("Commission: ");
-                        p.setCommission(sc.nextDouble());
                         sc.nextLine();
 
-                        dao.save(conn,p);
+                        System.out.print("Mode de paiement: ");
+                        p.setModePaiement(sc.nextLine());
+
+                        dao.save(conn, p);
 
                         System.out.println("Paiement ajouté ✔");
 
@@ -202,6 +227,38 @@ public class Main {
                         }
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
+                    }
+                }
+
+                case 3 -> {
+                    try {
+                        PaiementService paiementService = new PaiementService();
+                        paiementService.effectuerPaiementPartiel(conn);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                case 4 -> {
+                    try {
+                        PaiementDAO p = new PaiementDAO();
+                        p.update(conn, sc);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+                case 5 -> {
+                    try {
+                        System.out.print("Entrez l'ID du paiement pour générer PDF : ");
+                        int idPaiement = sc.nextInt();
+                        sc.nextLine();
+
+                        PaiementService.genererPDF(conn, idPaiement);
+
+                    } catch (Exception e) {
+                        System.out.println("Erreur lors de la génération du PDF");
+                        e.printStackTrace();
                     }
                 }
             }
@@ -265,7 +322,6 @@ public class Main {
         System.out.println("Total commissions: " + stats.getTotalCommissions());
         System.out.println("Factures payées: " + stats.getFacturesPayees());
         System.out.println("Factures non payées: " + stats.getFacturesNonPayees());
-        System.out.println("Factures Partiel: " + stats.getFacturesPartiel());
         System.out.println("Total transactions: " + stats.getTotalTransactions());
     }
 }

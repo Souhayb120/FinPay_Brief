@@ -5,8 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a7c870c-73d3-4436-bd08-837f6d32f797" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/FactureDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/PaiementServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/StatistiqueTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/facture_1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/facture_1.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factureimpayeemois.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/factureimpayeemois.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/facturesprestatairemois.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/facturesprestatairemois.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rapportglobalmois.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/rapportglobalmois.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Daoclient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Daoclient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Facture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Facture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FactureDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FactureDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FacturePDFService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FacturePDFService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FacturesImpayéesExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FacturesImpayéesExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Paiement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Paiement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaiementDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaiementDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaiementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaiementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PrestataireDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PrestataireDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RapportGlobalExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RapportGlobalExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RecuPDFGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RecuPDFGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Statistique.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Statistique.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatistiqueConn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StatistiqueConn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +41,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="AnnotationType" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -34,6 +60,11 @@
         </map>
       </branch-storage>
     </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RapportGlobal" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -44,8 +75,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Souhayb120/FinPay_Brief&quot;,
-    &quot;accountId&quot;: &quot;f4ec0a33-9598-40fd-8dbc-8c65e4610a38&quot;
+    &quot;url&quot;: &quot;https://github.com/Souhayb120/FinPay_Brief.git&quot;,
+    &quot;accountId&quot;: &quot;7e58aa87-06f0-40f7-89c5-d920f3df1a38&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -57,29 +88,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "RapportGlobal",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Administrator/Desktop/new/FinPay_Brief",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaiementServiceTest.calculerCommission.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaiementServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.test in Fin_Pay.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;hibatest&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ENAA/Desktop/FinPay_Brief&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="test" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ENAA\Desktop\FinPay_Brief\src\test\test" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="test" />
+      <recent name="org.example" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.test in Fin_Pay">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="FinPay_Brief" />
+      <module name="Fin_Pay" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -87,8 +141,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PaiementServiceTest" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Fin_Pay" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.PaiementServiceTest" />
+      <option name="METHOD_NAME" value="calculerCommission" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test in Fin_Pay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Fin_Pay" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.test in Fin_Pay" />
+        <item itemvalue="JUnit.PaiementServiceTest" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -102,5 +182,25 @@
       <updated>1771235733919</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Statistique.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Statistique.java</url>
+          <line>39</line>
+          <properties class="org.example.Statistique" method="getFacturesNonPayees">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
