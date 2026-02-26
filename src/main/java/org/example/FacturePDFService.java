@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class FacturePDFService {
 
-    public void genererPDF(Connection con, int factureId) {
+    public static void genererPDF(Connection con, int factureId) {
 
         try {
 
@@ -59,7 +59,7 @@ public class FacturePDFService {
             // ================= LOGO =================
             try {
                 // Load the image from resources folder (src/main/resources/f.png)
-                InputStream logoStream = FacturePDFService.class.getResourceAsStream("/f.png");
+                InputStream logoStream = FacturePDFService.class.getResourceAsStream("f.png");
                 if (logoStream == null) {
                     System.out.println("Logo non trouvé (f.png)");
                 } else {
@@ -131,4 +131,5 @@ public class FacturePDFService {
             e.printStackTrace();
         }
     }
+
 }

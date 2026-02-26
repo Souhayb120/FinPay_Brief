@@ -16,15 +16,8 @@ public class FactureDao {
         double montant = sc.nextDouble();
         System.out.println("Entrer montant total :");
         double totalMontant = sc.nextDouble();
-        //calcul status
-        String status;
-        if(montant==0){
-            status="Non payée";
-        } else if (totalMontant>montant) {
-            status="Partiel";
-        }else {
-            status="Payée";
-        }
+        String status = factureStatus(totalMontant,montant);
+
         try(PreparedStatement ps = con.prepareStatement("INSERT INTO facture(date_facture,status,id_client,id_prestataire,montant_total,montant) VALUES(?,?,?,?,?,?)")) {
             ps.setDate(1, Date.valueOf(LocalDate.now()));
             ps.setString(2, status);
@@ -37,6 +30,16 @@ public class FactureDao {
         }
     }
 
+    public String factureStatus(double montant, double montantTotal){
+        if (montantTotal>montant){
+            return  "PENDING";
+        } else if (montantTotal<montant) {
+            return  "PAID";
+        } else if (montant==0) {
+            return  "PENDING";
+        }
+        return null;
+    }
     public void supprimerFacture(Connection con)throws SQLException{
         System.out.println("===Suprimer un Facture ===");
         System.out.println("Entrer id supprimer");
@@ -140,5 +143,16 @@ public class FactureDao {
         }
         return 0;
     }
+    public static double totalFacturePrestataire(Connection conn, int idPrestataire) throws SQLException {
+        String sqlPrestataire = "SELECT SUM(montant) as total FROM facture where id_prestataire=?";
+        PreparedStatement ps = conn.prepareStatement(sqlPrestataire);
+        ps.setInt(1,idPrestataire);
+        ResultSet rs = ps.executeQuery();
+        double totalPaiements= 0;
+        if (rs.next()) {
+            totalPaiements = rs.getDouble("total");
+        }
+        return totalPaiements;
 
+    }
 }

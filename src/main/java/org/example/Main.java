@@ -53,8 +53,7 @@ public class Main {
                     clientMenu(conn);
                     break;
                 case 7:
-                    RapportGlobalExel gb = new RapportGlobalExel();
-                   gb.excecute();
+                  RapportGlobalExcel.excecute();
                     break;
                 case 0:
                     System.out.println("Au revoir");
@@ -114,9 +113,10 @@ public class Main {
             System.out.println("5. Filtrer par status");
             System.out.println("6. Filtrer par prestataire");
             System.out.println("7. Generer Facture PDF");
+            System.out.println("8. Factures Impayées Excel");
+            System.out.println("9. Facture Prestataire Excel");
             System.out.println("0. Retour");
             System.out.print("Choix: ");
-
             choice = sc.nextInt();
             sc.nextLine();
 
@@ -154,8 +154,17 @@ public class Main {
                 case 7 -> {
                     System.out.print("ID Facture: ");
                     int idp = sc.nextInt();
-
                     try {  fg.genererPDF(conn,idp); }
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 8 -> {
+
+                    try { FacturesImpayéesExcel.execute();}
+                    catch (Exception e){ System.out.println(e.getMessage()); }
+                }
+                case 9 -> {
+
+                    try { FacturePrestataireExcel.execute();}
                     catch (Exception e){ System.out.println(e.getMessage()); }
                 }
             }

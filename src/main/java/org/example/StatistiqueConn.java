@@ -3,11 +3,13 @@ package org.example;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class StatistiqueConn {
 
-    private Connection connection;
+    private final Connection connection;
     private Statistique statistique;
+
     public StatistiqueConn(Connection conn) {
         this.connection = conn;
     }
@@ -87,6 +89,6 @@ public class StatistiqueConn {
             System.out.println("Erreur statistiques : " + e.getMessage());
         }
 
-        return new Statistique(totalPaiements, totalCommissions, facturesPayees, facturesNonPayees,facturesP, totalTransactions);
+        return new Statistique(totalPaiements, totalCommissions, facturesPayees, facturesNonPayees, facturesP, totalTransactions);
     }
 }

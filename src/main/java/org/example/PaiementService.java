@@ -10,7 +10,7 @@ public class PaiementService {
 
     private Scanner scanner = new Scanner(System.in);
 
-    public double calculerCommission(double montant) {
+    public static double calculerCommission(double montant) {
         return montant * 0.02;
     }
 

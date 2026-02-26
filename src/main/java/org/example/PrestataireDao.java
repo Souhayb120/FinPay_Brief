@@ -5,18 +5,19 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PrestataireDao {
-    private Scanner sc=new Scanner(System.in);
+    private final Scanner sc=new Scanner(System.in);
 
-    public void ajouterPrestataire(Connection con) {
+    public void ajouterPrestataire(Connection conn) {
         System.out.println("===Ajouter un prestataire ===");
         System.out.println("Entrer le nom :");
         String nom=sc.nextLine();
         System.out.println("Entrer l'adress");
         String adress= sc.nextLine();
-        try (PreparedStatement ps = con.prepareStatement("insert into prestataire  (nom,adress) VALUES(?,?)")){
+        try (PreparedStatement ps = conn.prepareStatement("insert into prestataire  (nom,adress) VALUES(?,?)")){
             ps.setString(1,nom);
             ps.setString(2,adress);
             ps.executeUpdate();
@@ -25,12 +26,12 @@ public class PrestataireDao {
             System.out.println("Error"+e.getMessage());
         }
     }
-    public void suprimerPrestataire(Connection con){
+    public void suprimerPrestataire(Connection conn){
         System.out.println("===Suprimer un Prestataire ===");
         System.out.println("Entrer id supprimer");
         int id=sc.nextInt();
         sc.nextLine();
-        try(PreparedStatement ps= con.prepareStatement("DELETE From Prestataire WHERE id =?")) {
+        try(PreparedStatement ps= conn.prepareStatement("DELETE From Prestataire WHERE id =?")) {
             ps.setInt(1,id);
             int remove=ps.executeUpdate();
             if (remove>0){
@@ -43,11 +44,11 @@ public class PrestataireDao {
             System.out.println("Error"+e.getMessage());
         }
     }
-    public void recherchPrestataire(Connection con){
+    public void recherchPrestataire(Connection conn){
         System.out.println("===Rechercher un Prestataire ===");
         System.out.println("Entrer id de recherche : ");
         int id = sc.nextInt();
-        try(PreparedStatement ps = con.prepareStatement("SELECT  * FROM prestataire WHERE id =?")) {
+        try(PreparedStatement ps = conn.prepareStatement("SELECT  * FROM prestataire WHERE id =?")) {
           ps.setInt(1,id);
             ResultSet st=ps.executeQuery();
             if(st.next()){
@@ -62,7 +63,7 @@ public class PrestataireDao {
             System.out.println("Erreur"+e.getMessage());
         }
     }
-    public void modifierPrestataire(Connection con){
+    public void modifierPrestataire(Connection conn){
         System.out.println("===Modifier un Prestataire ===");
         System.out.println("Entrer l'id de modifier :");
         int id=sc.nextInt();
@@ -71,7 +72,7 @@ public class PrestataireDao {
         String nom= sc.nextLine();
         System.out.println("Entrer l'adress modifier :");
         String adress=sc.nextLine();
-        try(PreparedStatement ps= con.prepareStatement("UPDATE Prestataire SET nom = ? , adress = ? WHERE id =?")) {
+        try(PreparedStatement ps= conn.prepareStatement("UPDATE Prestataire SET nom = ? , adress = ? WHERE id =?")) {
             ps.setString(1,nom);
             ps.setString(2,adress);
            ps.setInt(3,id);
@@ -86,9 +87,9 @@ public class PrestataireDao {
         }
 
     }
-    public void listerPrestataire(Connection con){
+    public void listerPrestataire(Connection conn){
         System.out.println("===Lister un Prestataire ===");
-        try(PreparedStatement ps= con.prepareStatement("SELECT * FROM Prestataire")) {
+        try(PreparedStatement ps= conn.prepareStatement("SELECT * FROM Prestataire")) {
            ResultSet rs = ps.executeQuery();
            while (rs.next()){
                System.out.println("Id :"+rs.getInt("id"));
