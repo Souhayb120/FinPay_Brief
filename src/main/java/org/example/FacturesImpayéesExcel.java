@@ -18,9 +18,10 @@ import java.sql.SQLException;
 public class FacturesImpayéesExcel {
     public FacturesImpayéesExcel(){}
     public static void execute() throws IOException, SQLException {
-        String sql = "select facture.date_facture as Date ,facture.id as ID ,client.nom as Client,facture.montant as Montant,DATEDIFF(CURRENT_DATE,facture.date_facture) as Jours_de_retards\n" +
+        String sql = "select facture.date_facture as Date ,facture.id as ID ,client.nom as Client , facture.montant as Montant,DATEDIFF(CURRENT_DATE,facture.date_facture) as Jours_de_retards ,client.solde_init as solde\n" +
                 "from facture \n" +
                 "join client on facture.id_client=client.id;";
+
         Connection conn =DatabaseConnection.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -32,7 +33,7 @@ public class FacturesImpayéesExcel {
 
         // header
         Row headerRow = sheet.createRow(0);
-        String[] header={"Date ","ID" , "Client", " Montant "," Jours de retards "};
+        String[] header={"Date ","ID" , "Client", " Montant "," Jours de retards "," solde"};
         for(int i =0;i<header.length;i++){
             Cell cell = headerRow.createCell(i);
             cell.setCellValue(header[i]);
@@ -48,6 +49,7 @@ public class FacturesImpayéesExcel {
             row.createCell(2).setCellValue(rs.getString("Client"));
             row.createCell(3).setCellValue(rs. getDouble("Montant"));
             row.createCell(4).setCellValue(rs.getString("Jours_de_retards"));
+            row.createCell(5).setCellValue(rs.getDouble("solde"));
         }
         writeFile(workbook);
         workbook.close();

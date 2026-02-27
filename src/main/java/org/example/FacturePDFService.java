@@ -117,6 +117,7 @@ public class FacturePDFService {
             table.addCell("Montant total");
             table.addCell(total + " MAD");
 
+
             document.add(table);
 
             document.add(new Paragraph(" "));
