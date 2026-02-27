@@ -21,6 +21,7 @@ public class FacturePrestataireExcel{
                 "    f.date_facture as Date,\n" +
                 "    c.nom as client,\n" +
                 "    f.montant_total as montant,\n" +
+
                 "    f.status as status\n" +
                 "FROM facture f\n" +
                 "JOIN client c ON f.id_client = c.id\n" +
@@ -85,6 +86,11 @@ public class FacturePrestataireExcel{
         workbook.write(fout);
         fout.close();
     }
+    public static void main(String[] args) throws SQLException, IOException {
+        FacturePrestataireExcel.execute();
+    }
 
 
 }
+
+

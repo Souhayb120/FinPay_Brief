@@ -52,9 +52,8 @@ public class Main {
                 case 5:
                     clientMenu(conn);
                     break;
-                case 6:
-                    RapportGlobalExel gb = new RapportGlobalExel();
-                    gb.excecute();
+                case 7:
+                  RapportGlobalExcel.excecute();
                     break;
                 case 0:
                     System.out.println("Au revoir");

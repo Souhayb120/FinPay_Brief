@@ -143,5 +143,16 @@ public class FactureDao {
         }
         return 0;
     }
+    public static double totalFacturePrestataire(Connection conn, int idPrestataire) throws SQLException {
+        String sqlPrestataire = "SELECT SUM(montant) as total FROM facture where id_prestataire=?";
+        PreparedStatement ps = conn.prepareStatement(sqlPrestataire);
+        ps.setInt(1,idPrestataire);
+        ResultSet rs = ps.executeQuery();
+        double totalPaiements= 0;
+        if (rs.next()) {
+            totalPaiements = rs.getDouble("total");
+        }
+        return totalPaiements;
 
+    }
 }

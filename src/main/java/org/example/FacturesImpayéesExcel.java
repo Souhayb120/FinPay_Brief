@@ -38,12 +38,11 @@ public class FacturesImpayéesExcel {
             cell.setCellValue(header[i]);
 
         }
-        int rindex = 1;
+ int rindex = 1;
         while(rs.next()){
             Row row = sheet.createRow(rindex ++);
             java.sql.Date date = rs.getDate("Date");
             row.createCell(0).setCellValue(date.toString());
-
             row.createCell(1).setCellValue(rs.getInt("ID"));
             row.createCell(2).setCellValue(rs.getString("Client"));
             row.createCell(3).setCellValue(rs. getDouble("Montant"));
@@ -63,4 +62,5 @@ public class FacturesImpayéesExcel {
         FacturesImpayéesExcel.execute();
     }
 }
+
 
